@@ -34,11 +34,11 @@ const addUser = (req, res) => {
             email: email
         };
 
-        username.push(newUser);
+        users.push(newUser);
 
         return res.status(201).json({
             success: true,
-            message: `${username} got added in the list.`,
+            message: `${newUser.name} got added in the list.`,
             data: newUser
         });
 

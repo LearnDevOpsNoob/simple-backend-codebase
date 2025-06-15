@@ -1,0 +1,37 @@
+name: Deploy backend to EC2
+
+# This triggers the workflow whenever you push to the 'main' branch
+on:
+  push:
+    branches:
+      - main    
+
+jobs:
+    deploy:
+        name: Deploy backend to EC2
+        runs-on: ubuntu-latest   # This runs the job on a GitHub-hosted Ubuntu server
+
+        steps: 
+              # Step 1: Check out the code (not used directly here, but good practice)
+          - name: Checkout Code
+            uses: actions/checkout@v4
+
+              # Step 2: Save your EC2 private key securely on the runner
+          - name: Add SSH Key
+            run: |
+               echo "${{ secrets.EC2_SSH_KEY }}" > ec2-key.pem 
+               chmod 600 ec2-key.pem
+
+              #GitHub needs this private key to connect to your EC2 instance.
+   
+              # Step 3: SSH into EC2 and run deployment commands
+          - name: Connect to EC2
+            run: |
+               ssh -o StrictHostKeyChecking=no -i ec2-key.pm ${{ secrets.EC2_USERNAME }}@{{ secrets.EC2_HOST }} << 'EOF'
+               cd ${{ secrets.EC2_EC2_APP_DIR }}  
+               git pull origin main
+               npm install
+               node server.js &
+               EOF  
+
+          #THis final step - connects to EC2, take updated code, installs packages, and starts the server
