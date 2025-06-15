@@ -1,6 +1,6 @@
 const users = [
-  { id: 1, name: 'Alice', email: 'alice@example.com' },
-  { id: 2, name: 'Bob', email: 'bob@example.com' },
+  { id: 1, name: 'Alan', email: 'alan@example.com' },
+  { id: 2, name: 'Blake', email: 'blake@example.com' },
 ];
 
 export { users };
