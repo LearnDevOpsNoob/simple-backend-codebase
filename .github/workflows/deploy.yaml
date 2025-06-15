@@ -28,7 +28,7 @@ jobs:
           - name: Connect to EC2
             run: |
                ssh -o StrictHostKeyChecking=no -i ec2-key.pm ${{ secrets.EC2_USERNAME }}@{{ secrets.EC2_HOST }} << 'EOF'
-               cd ${{ secrets.EC2_EC2_APP_DIR }}  
+               cd ${{ secrets.EC2_APP_DIR }}  
                git pull origin main
                npm install
                node server.js &
