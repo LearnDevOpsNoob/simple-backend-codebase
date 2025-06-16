@@ -110,3 +110,17 @@ jobs:
 ⚠️ nvm won't auto-load in SSH sessions unless explicitly sourced (or use plain node).
 
 🚫 Do not use passphrase-protected keys unless you manage ssh-agent.
+
+If sometimes you feel that code is not updated, can happen due to previous process running in the back ground, so just add - pkill -f "node server.js" || true 
+BEFORE
+nohup node server.js
+
+
+WHT to do if we stop and re-run the EC2 Instance - 
+✅ EBS Volume (your files)	Remains intact — all files, code, keys, and installed packages persist.
+❌ Public IPv4 Address	Changes by default unless you use an Elastic IP.
+❌ Running Processes	All running processes (e.g., node server.js) are stopped and need to be restarted.
+⚠️ Firewall/Security Group	Remains as-is (rules don't reset), but you must ensure port 3000 is still open.
+Update GitHub Secrets (if public IP changed) -> Settings > Secrets > Actions -> EC2_HOST
+
+
