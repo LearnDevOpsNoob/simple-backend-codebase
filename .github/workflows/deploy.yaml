@@ -39,8 +39,8 @@ jobs:
             # Tell Git to use the correct GitHub deploy key
             export GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_github -o IdentitiesOnly=yes'
 
-            # Pull latest code
-            git pull origin main
+            # ✅ Use correct GitHub SSH key for git pull
+            ssh-agent bash -c 'ssh-add ~/.ssh/id_ed25519_github; git pull origin main'
 
             # Install dependencies
             npm install
