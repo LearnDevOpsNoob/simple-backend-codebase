@@ -27,22 +27,22 @@ jobs:
       - name: Connect to EC2 and Deploy
         run: |
           ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} << 'EOF'
-            # Navigate to the app directory
             cd ${{ secrets.EC2_APP_DIR }}
 
-            # Load nvm and select Node version
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
             nvm use --lts
 
-            # Pull latest code using GitHub deploy key
+            # Confirm the key file exists and permissions are correct
+            echo "🔐 Verifying SSH key:"
+            ls -l ~/.ssh/id_ed25519_github
+            chmod 600 ~/.ssh/id_ed25519_github
+
+            # Set GIT_SSH_COMMAND to use correct key
             GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519_github -o IdentitiesOnly=yes' git pull origin main
 
-            # Install backend dependencies
             npm install
-
-            # Restart the server using nohup
             nohup node server.js > output.log 2>&1 &
           EOF
 
