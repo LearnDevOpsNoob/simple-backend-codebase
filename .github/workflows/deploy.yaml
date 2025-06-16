@@ -36,7 +36,7 @@ jobs:
             nvm use --lts
 
             # Ensure git uses correct SSH key for GitHub
-            export GIT_SSH_COMMAND='ssh -i \$HOME/.ssh/id_ed25519_github -o IdentitiesOnly=yes'
+            export GIT_SSH_COMMAND='ssh -i /home/ubuntu/.ssh/id_ed25519_github -o IdentitiesOnly=yes'
 
             # Pull latest code
             git pull origin main
