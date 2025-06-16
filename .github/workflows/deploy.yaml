@@ -30,12 +30,13 @@ jobs:
             # Navigate to the app directory
             cd ${{ secrets.EC2_APP_DIR }}
 
-            # Load nvm and Node
-            export NVM_DIR="\$HOME/.nvm"
-            [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+            # Load nvm and Node (source .bashrc for nvm to be available)
+            . ~/.bashrc
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use --lts
 
-            # Ensure git uses correct SSH key for GitHub
+            # Tell Git to use the correct GitHub deploy key
             export GIT_SSH_COMMAND='ssh -i /home/ubuntu/.ssh/id_ed25519_github -o IdentitiesOnly=yes'
 
             # Pull latest code
@@ -44,8 +45,8 @@ jobs:
             # Install dependencies
             npm install
 
-            # Restart server
+            # Start the server
             nohup node server.js > output.log 2>&1 &
           EOF
 
-      # This final step connects to EC2, updates code, installs packages, and starts the server
+            # This final step connects to EC2, updates code, installs packages, and starts the server
