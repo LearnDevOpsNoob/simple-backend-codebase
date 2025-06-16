@@ -1,34 +1,34 @@
-EC2 Deployment via GitHub Actions (Node.js Backend)
+### EC2 Deployment via GitHub Actions (Node.js Backend)
 
 This guide helps you set up automatic deployment of your Node.js backend to an AWS EC2 instance using GitHub Actions.
 
-✅ Overview
+✅ Overview  
 
-✅ Push to main → auto-deploy to EC2
+✅ Push to main → auto-deploy to EC2  
 
-✅ Pulls latest code, installs dependencies, and restarts the server
+✅ Pulls latest code, installs dependencies, and restarts the server  
 
 🔐 1. SSH Authentication Setup
 
-A. Generate a Deploy SSH Key on EC2 (no passphrase)
+A. Generate a Deploy SSH Key on EC2 (no passphrase)  
 
-ssh-keygen -t ed25519 -C "github-deploy" -f ~/.ssh/github_deploy_key -N ""
+ssh-keygen -t ed25519 -C "github-deploy" -f ~/.ssh/github_deploy_key -N ""  
 
-B. Add Public Key to GitHub Repository
+B. Add Public Key to GitHub Repository  
 
-Go to GitHub → Repo → Settings → Deploy Keys
+Go to GitHub → Repo → Settings → Deploy Keys  
 
-Click "Add deploy key"
+Click "Add deploy key"  
 
-Title: EC2 Deploy Key
+Title: EC2 Deploy Key  
 
-Paste contents of ~/.ssh/github_deploy_key.pub
+Paste contents of ~/.ssh/github_deploy_key.pub  
 
-✅ Check Allow write access
+✅ Check Allow write access  
 
-C. Configure SSH for GitHub Access
+C. Configure SSH for GitHub Access  
 
-Create ~/.ssh/config on EC2:
+Create ~/.ssh/config on EC2:  
 
 Host github.com
   HostName github.com
@@ -123,4 +123,9 @@ WHT to do if we stop and re-run the EC2 Instance -
 ⚠️ Firewall/Security Group	Remains as-is (rules don't reset), but you must ensure port 3000 is still open.
 Update GitHub Secrets (if public IP changed) -> Settings > Secrets > Actions -> EC2_HOST
 
+##Best Practice:
+Use 0.0.0.0/0 for SSH only temporarily during GitHub Action runs:
 
+Set to 0.0.0.0/0 → trigger workflow
+
+After deploy, switch back to My IP
