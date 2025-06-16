@@ -38,7 +38,7 @@ const addUser = (req, res) => {
 
         return res.status(201).json({
             success: true,
-            message: `${newUser.name} got added in the list.`,
+            message: `${newUser.name} got added in the list...`,
             data: newUser
         });
 

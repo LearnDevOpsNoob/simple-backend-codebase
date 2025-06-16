@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest   # This runs the job on a GitHub-hosted Ubuntu server
 
     steps: 
-      # Step 1: Check out the code (good practice even if not directly used)
+      # Step 1: Check out the code
       - name: Checkout Code
         uses: actions/checkout@v4
 
